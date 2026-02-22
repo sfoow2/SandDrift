@@ -8,7 +8,7 @@ The goal of the project was to implement a real-time physics-like simulation on 
 
 ## Hardware
 
-* ESP32-S3
+* ESP32-S3-Zero-Mini
 * MPU6050 accelerometer/gyroscope (I2C)
 * SSD1306 OLED display (I2C)
 * Breadboard prototype
