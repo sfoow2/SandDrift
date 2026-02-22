@@ -62,9 +62,7 @@ The SSD1306 resolution and refresh speed limit visual detail and frame rate. A h
 **Mechanical Design**
 The current prototype is breadboard-based. A custom PCB and enclosure would improve reliability, reduce wiring noise, and make the device portable.
 
-##
-
-### 5. Images
+## Images
 
 ![Device](images/IMG_2262.jpg)
 ![Device](images/IMG_2263.jpg)
