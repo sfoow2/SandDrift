@@ -48,6 +48,20 @@ Solution: stabilized update timing and decoupled physics update from sensor read
 * Reading sensor datasheets and interpreting register data
 * Performance optimization on microcontrollers
 
+## Design Improvements / Future Work
+
+**Sensor Choice**
+The MPU6050 requires external pull-up resistors for I2C and produces noticeable noise when stationary. A newer IMU with better onboard filtering and integrated pull-ups would simplify wiring and reduce signal instability.
+
+**Physics Accuracy**
+The current simulation uses integer-based particle movement for performance reasons. Using floating-point velocity and acceleration would allow smoother motion and more realistic particle behavior, at the cost of additional CPU usage.
+
+**Display Limitations**
+The SSD1306 resolution and refresh speed limit visual detail and frame rate. A higher resolution or faster display (such as SPI-driven TFT) would significantly improve visual quality and allow more particles to be simulated.
+
+**Mechanical Design**
+The current prototype is breadboard-based. A custom PCB and enclosure would improve reliability, reduce wiring noise, and make the device portable.
+
 ##
 
 ### 5. Images
