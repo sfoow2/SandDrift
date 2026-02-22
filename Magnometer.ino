@@ -66,10 +66,10 @@ void AccelerometerTick() {
     xVelocity = 0;
     yVelocity = 0;
 
-    if (ax > 0.20) yVelocity = 1;
-    if (ax < -0.20) yVelocity = -1;
-    if (ay > 0.20) xVelocity = 1;
-    if (ay < -0.20) xVelocity = -1;
+    if (ax > 0.15) yVelocity = 1;
+    if (ax < -0.15) yVelocity = -1;
+    if (ay > 0.15) xVelocity = 1;
+    if (ay < -0.15) xVelocity = -1;
 
   } else {
     Serial.println("Accel read failed");

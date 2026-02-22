@@ -81,7 +81,7 @@ void SetupScreen() {
 
 // ================= Main Tick =================
 void ScreenTick() {
-    for (int x = 0; x < floor(abs(xVelocity) + abs(yVelocity)) + 1; x++){
+    for (int x = 0; x < floor(abs(xVelocity) + abs(yVelocity) * 1.8) + 1; x++){
         DoSandTick();
     }
     pushBufferToDisplay();
