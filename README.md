@@ -52,3 +52,7 @@ Solution: stabilized update timing and decoupled physics update from sensor read
 
 ### 5. Images
 
+![Device](images/IMG_2262.jpg)
+![Device](images/IMG_2263.jpg)
+![Device](images/IMG_2264.jpg)
+
