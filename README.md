@@ -4,7 +4,7 @@
 
 Sand Drift is a handheld embedded device that simulates granular particles reacting to gravity based on device orientation. The system uses an ESP32-S3-Zero-Mini microcontroller, an MPU6050 IMU for motion sensing, and an SSD1306 OLED display for rendering.
 
-The goal of the project was to implement a real-time physics-like simulation on a resource-limited microcontroller while interfacing with external sensors and maintaining smooth visual output.
+The goal of the project was to implement a real time physics like simulation on a resource limited microcontroller while interfacing with external sensors and maintaining smooth visual output.
 
 ## Hardware
 
