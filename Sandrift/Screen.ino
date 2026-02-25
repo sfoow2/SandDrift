@@ -10,10 +10,11 @@ struct Sand {
     uint8_t y;
 };
 
-Sand ListOFSand[SANDAMOUNT];
+Sand ListOFSand[SANDAMOUNT]; //made an array instead of a vector since the amount of SAND is constant and will never change
 
 uint8_t screenBuffer[SCREEN_W * SCREEN_H / 8];
 
+//forces a inline for optimization
 #define PIXEL_INDEX(x,y) ((x) + (((y) >> 3) * SCREEN_W))
 #define PIXEL_MASK(y) (1 << ((y) & 7))
 
@@ -166,4 +167,5 @@ void DoSandTick(){
     }
 
 }
+
 
