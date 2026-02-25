@@ -20,7 +20,7 @@ uint8_t screenBuffer[SCREEN_W * SCREEN_H / 8];
 
 uint32_t rngState = 1234567;
 
-inline uint32_t fastRand(){
+inline uint32_t fastRand(){ //does fast rnng for speed
     rngState ^= rngState << 13;
     rngState ^= rngState >> 17;
     rngState ^= rngState << 5;
@@ -40,7 +40,7 @@ inline void pushBufferToDisplay(){
 void SetupScreen(){
 
     Wire.begin(SDA_PIN_SCREEN, SCL_PIN_SCREEN);
-    Wire.setClock(1000000);
+    Wire.setClock(1000000); //sets the clock rate of the I2C clock to be 1Mhz
     u8g2.begin();
 
     clearScreenBuffer();
@@ -51,7 +51,7 @@ void SetupScreen(){
 
         bool placed = false;
 
-        for (int attempts = 0; attempts < 100 && !placed; attempts++) {
+        for (int attempts = 0; attempts < 100 && !placed; attempts++) { //sets up random sands on the screen without adding sand at the same place twice
 
             uint8_t x = fastRand() % SCREEN_W;
             uint8_t y = fastRand() % SCREEN_H;
@@ -87,7 +87,7 @@ void DoSandTick(){
         return;
     }
 
-    for (int s = 0; s < SANDAMOUNT; s++){
+    for (int s = 0; s < SANDAMOUNT; s++){ //should probebly change all this in different functions instead of nested hell
         uint8_t x = ListOFSand[s].x;
         uint8_t y = ListOFSand[s].y;
 
@@ -167,5 +167,6 @@ void DoSandTick(){
     }
 
 }
+
 
 
