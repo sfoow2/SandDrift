@@ -1,6 +1,5 @@
 #include <Wire.h>
 
-/* ================= PINS ================= */
 #define MPU_ADDR 0x68
 
 #define SDA_PIN_MAG 8 
@@ -9,33 +8,26 @@
 #define MPU_PWR_MGMT_1 0x6B
 #define MPU_ACCEL_XOUT_H 0x3B
 
-// ================= Global Variables =================
 int16_t GlobalLastX = 0;
 int16_t GlobalLastY = 0;
 int16_t GlobalLastZ = 0;
 
-// velocity placeholders (optional)
+TwoWire I2C_MPU = TwoWire(1); 
 
-// ================= TwoWire instance for MPU6050 =================
-TwoWire I2C_MPU = TwoWire(1); // use hardware I2C port 1
-
-// ================= MPU6050 Initialization =================
 void setupAccelerometer() {
-  // initialize hardware I2C
-  I2C_MPU.begin(SDA_PIN_MAG, SCL_PIN_MAG);
-  I2C_MPU.setClock(400000);  // 400 kHz fast I2C (use 100000 if unstable)
 
-  // wake up MPU6050 (it starts in sleep mode)
+  I2C_MPU.begin(SDA_PIN_MAG, SCL_PIN_MAG);
+  I2C_MPU.setClock(400000);  
+
   I2C_MPU.beginTransmission(MPU_ADDR);
   I2C_MPU.write(MPU_PWR_MGMT_1);
   I2C_MPU.write(0);
   I2C_MPU.endTransmission();
-  delay(10); // small delay for MPU6050 to wake up
+  delay(10); 
 
   Serial.println("MPU6050 Ready");
 }
 
-// ================= Read Accelerometer =================
 bool readAccel(int16_t &ax, int16_t &ay, int16_t &az) {
   I2C_MPU.beginTransmission(MPU_ADDR);
   I2C_MPU.write(MPU_ACCEL_XOUT_H);
@@ -50,7 +42,6 @@ bool readAccel(int16_t &ax, int16_t &ay, int16_t &az) {
   return true;
 }
 
-// ================= Tick =================
 void AccelerometerTick() {
   if (readAccel(GlobalLastX, GlobalLastY, GlobalLastZ)) {
     float ax = GlobalLastX / 16384.0;
@@ -61,7 +52,6 @@ void AccelerometerTick() {
     Serial.print(" AY: "); Serial.print(ay, 3);
     Serial.print(" AZ: "); Serial.println(az, 3);
 
-    // optional: compute simple velocity mapping
     xVelocity = 0;
     yVelocity = 0;
 
@@ -73,4 +63,5 @@ void AccelerometerTick() {
   } else {
     Serial.println("Accel read failed");
   }
+
 }
