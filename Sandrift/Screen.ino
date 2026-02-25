@@ -14,11 +14,9 @@ Sand ListOFSand[SANDAMOUNT];
 
 uint8_t screenBuffer[SCREEN_W * SCREEN_H / 8];
 
-// ================= Fast Pixel Macros =================
 #define PIXEL_INDEX(x,y) ((x) + (((y) >> 3) * SCREEN_W))
 #define PIXEL_MASK(y) (1 << ((y) & 7))
 
-// ================= Fast RNG (XORShift) =================
 uint32_t rngState = 1234567;
 
 inline uint32_t fastRand() {
@@ -28,19 +26,16 @@ inline uint32_t fastRand() {
     return rngState;
 }
 
-// ================= Screen Buffer =================
 inline void clearScreenBuffer() {
     memset(screenBuffer, 0, sizeof(screenBuffer));
 }
 
-// ================= Fast Display Push =================
 inline void pushBufferToDisplay() {
     u8g2.clearBuffer();
     memcpy(u8g2.getBufferPtr(), screenBuffer, sizeof(screenBuffer));
     u8g2.sendBuffer();
 }
 
-// ================= Setup =================
 void SetupScreen() {
 
     Wire.begin(SDA_PIN_SCREEN, SCL_PIN_SCREEN);
@@ -49,7 +44,6 @@ void SetupScreen() {
 
     clearScreenBuffer();
 
-    // Seed fast RNG
     rngState = esp_random();
 
     for (int i = 0; i < SANDAMOUNT; i++) {
@@ -74,12 +68,12 @@ void SetupScreen() {
         }
 
         if (!placed) {
-            break; // screen too full
+            break; 
+
         }
     }
 }
 
-// ================= Main Tick =================
 void ScreenTick() {
     for (int x = 0; x < floor(pow(abs(xVelocity) + abs(yVelocity),1.2)) + 1; x++){
         DoSandTick();
@@ -87,7 +81,6 @@ void ScreenTick() {
     pushBufferToDisplay();
 }
 
-// ================= Sand Logic =================
 void DoSandTick()
 {
     if (xVelocity == 0 && yVelocity == 0){ 
@@ -102,7 +95,6 @@ void DoSandTick()
         int nx = x + xVelocity;
         int ny = y + yVelocity;
 
-        // ===== 1. Straight Move =====
         if ((unsigned)nx < SCREEN_W && (unsigned)ny < SCREEN_H)
         {
             uint16_t nIdx = PIXEL_INDEX(nx, ny);
@@ -120,7 +112,6 @@ void DoSandTick()
             }
         }
 
-        // ===== 2. Proper Diagonals (gravity-aware) =====
         bool flip = fastRand() & 1;
 
         int dx1, dy1;
@@ -128,18 +119,17 @@ void DoSandTick()
 
         if (yVelocity != 0)
         {
-            // vertical gravity (falling up/down)
+
             dx1 = -1; dy1 = yVelocity;
             dx2 =  1; dy2 = yVelocity;
         }
         else
         {
-            // horizontal gravity (falling left/right)
+
             dx1 = xVelocity; dy1 = -1;
             dx2 = xVelocity; dy2 =  1;
         }
 
-        // randomize order to avoid patterns
         if (flip)
         {
             int t;
@@ -147,7 +137,6 @@ void DoSandTick()
             t = dy1; dy1 = dy2; dy2 = t;
         }
 
-        // ----- First diagonal -----
         int tx = x + dx1;
         int ty = y + dy1;
 
@@ -168,7 +157,6 @@ void DoSandTick()
             }
         }
 
-        // ----- Second diagonal -----
         tx = x + dx2;
         ty = y + dy2;
 
@@ -188,4 +176,5 @@ void DoSandTick()
             }
         }
     }
+
 }
